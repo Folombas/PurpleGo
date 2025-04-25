@@ -5,15 +5,11 @@ import (
 	"math"
 )
 
-func main() {
+const IMTPower = 2
 
-	var userHeight float64
-	var userKg float64
+func main() {
 	fmt.Println("__ Калькулятор степени ожирения __")
-	fmt.Print("Введите свой рост в сантиметрах: ")
-	fmt.Scan(&userHeight)
-	fmt.Print("Введите свой вес: ")
-	fmt.Scan(&userKg)
+	userKg, userHeight := getUserInput()
 	IMT := calculateIMT(userKg, userHeight)
 	outputResult(IMT)
 }
@@ -24,7 +20,16 @@ func outputResult(imt float64) {
 }
 
 func calculateIMT(userKg float64, userHeight float64) float64 {
-	const IMTPower = 2
 	IMT := userKg / math.Pow(userHeight/100, IMTPower)
 	return IMT
+}
+
+func getUserInput() (float64, float64) {
+	var userHeight float64
+	var userKg float64
+	fmt.Print("Введите свой рост в сантиметрах: ")
+	fmt.Scan(&userHeight)
+	fmt.Print("Введите свой вес: ")
+	fmt.Scan(&userKg)
+	return userKg, userHeight
 }

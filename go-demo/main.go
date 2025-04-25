@@ -1,18 +1,22 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"math"
 )
 
 const IMTPower = 2
 
-
-func main() {	
+func main() {
 	fmt.Println("__ Калькулятор степени ожирения __")
 	for {
 		userKg, userHeight := getUserInput()
-		IMT := calculateIMT(userKg, userHeight)
+		IMT, err := calculateIMT(userKg, userHeight)
+		if err != nil {
+			fmt.Println("Не заданы параметры для расчёта")
+			continue
+		}
 		outputResult(IMT)
 		isRepeateCalculation := checkRepeatCalculation()
 		if !isRepeateCalculation {
@@ -28,19 +32,22 @@ func outputResult(imt float64) {
 	case imt < 16:
 		fmt.Println("У вас сильный дефицит массы тела")
 	case imt < 18.5:
-		fmt.Println("У ваc дефицит массы тела")	
+		fmt.Println("У ваc дефицит массы тела")
 	case imt < 25:
 		fmt.Println("У ваc нормальный вес")
-	case imt < 30: 
+	case imt < 30:
 		fmt.Println("У ваc избыточный вес")
 	default:
-		fmt.Println("У ваc степень ожирения")	
+		fmt.Println("У ваc степень ожирения")
 	}
 }
 
-func calculateIMT(userKg float64, userHeight float64) float64 {
+func calculateIMT(userKg float64, userHeight float64) (float64, error) {
+	if userKg <= 0 || userHeight <= 0 {
+		return 0, errors.New("NO_PARAMS_ERROR")
+	}
 	IMT := userKg / math.Pow(userHeight/100, IMTPower)
-	return IMT
+	return IMT, nil
 }
 
 func getUserInput() (float64, float64) {

@@ -7,10 +7,14 @@ import "fmt"
 // Вывести массив
 
 func main() {
-	tr1 := []int{1, 2, 3}
-	tr2 := []int{4, 5, 6}
+	tr1 := []int{2, 4, 6}
+	tr2 := []int{8, 10, 12}
 	tr1 = append(tr1, tr2...)
 	fmt.Println(tr1)
+
+	for index, value := range tr1 {
+		fmt.Println(index, value)
+	}
 
 
 	transactions := []float64{}

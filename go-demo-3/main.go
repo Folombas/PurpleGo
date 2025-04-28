@@ -13,23 +13,21 @@ import "fmt"
 При 4 - Завершение
 */
 
-
-
-
 func main() {
 	bookmarks := map[string]string{}
 	fmt.Println("Приложение для закладок")
+Menu:
 	for {
 		variant := getMenu()
 		switch variant {
-		case 1:	
+		case 1:
 			printBookmarks(bookmarks)
-		case 2: 
+		case 2:
 			bookmarks = addBookmark(bookmarks)
 		case 3:
 			bookmarks = deleteBookmark(bookmarks)
 		case 4:
-			break
+			break Menu
 		}
 	}
 }
@@ -65,7 +63,7 @@ func addBookmark(bookmarks map[string]string) map[string]string {
 	return bookmarks
 }
 
-func deleteBookmark(bookmarks map[string]string) map[string]string  {
+func deleteBookmark(bookmarks map[string]string) map[string]string {
 	var bookmarkKeyToDelete string
 	fmt.Print("Введите название: ")
 	fmt.Scan(&bookmarkKeyToDelete)

@@ -9,6 +9,12 @@ type account struct {
 }
 
 func main() {
+	str := []rune("Привет!)")
+	for _, ch := range string(str) {
+		fmt.Println(ch, string(ch))
+	}
+
+
 	login := promptData("Введите Ваш логин")
 	password := promptData("Введите Ваш пароль")
 	url := promptData("Введите URL")

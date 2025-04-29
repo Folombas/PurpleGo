@@ -12,7 +12,6 @@ type account struct {
 }
 
 func (acc *account) outputPassword() {
-	fmt.Println(acc)
 	fmt.Println(acc.login, acc.password, acc.url)
 }
 
@@ -24,17 +23,21 @@ func (acc *account) generatePassword(n int) {
 	acc.password = string(res)
 }
 
+func newAccount(login, password, url string) *account {
+	return &account {
+		url: url,
+		login: login,
+		password: password,
+	}
+}
+
 var letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-*!")
 
 func main() {
 	login := promptData("Введите Ваш логин")
-	// password := promptData("Введите Ваш пароль")
+	password := promptData("Введите Ваш пароль")
 	url := promptData("Введите URL")
-
-	myAccount := account{
-		url:    url,
-		login:	login,
-	}
+	myAccount := newAccount(login, password, url)
 	myAccount.generatePassword(12)
 	myAccount.outputPassword()
 	fmt.Println(myAccount)

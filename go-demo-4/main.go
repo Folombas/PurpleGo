@@ -3,14 +3,14 @@ package main
 import "fmt"
 
 func main() {
-	login := promptData("Введите логин")
-	password := promptData("Введите пароль")
+	login := promptData("Введите Ваш логин")
+	password := promptData("Введите Ваш пароль")
 	url := promptData("Введите URL")
 
 	outputPassword(login, password, url)
 }
 
-func promptData(prompt string) string{
+func promptData(prompt string) string {
 	fmt.Print(prompt)
 	var res string
 	fmt.Scan(&res)

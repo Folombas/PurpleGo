@@ -3,6 +3,7 @@ package account
 import (
 	"demo/password/files"
 	"encoding/json"
+	"strings"
 	"time"
 
 	"github.com/fatih/color"
@@ -31,6 +32,17 @@ func NewVault() *Vault {
 		}
 	}
 	return &vault
+}
+
+func (vault *Vault) findAccountByUrl(url string) []Account {
+	for _, account := range vault.Accounts {
+		var accounts []Account
+		isMatched := strings.Contains(account.Url, url)
+		if isMatched {
+			accounts = append(accounts, account)
+		}
+	}
+	return accounts
 }
 
 func (vault *Vault) AddAccount(acc Account) {

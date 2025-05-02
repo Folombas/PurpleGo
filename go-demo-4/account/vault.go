@@ -1,16 +1,23 @@
 package account
 
 import (
+	"demo/password/output"
 	"encoding/json"
 	"strings"
 	"time"
-
-	"github.com/fatih/color"
 )
 
-type Db interface {
+type ByteReader interface {
 	Read() ([]byte, error)
-	Write([]byte)
+}
+
+type ByteWriter interface {
+	Write() ([]byte, error)
+}
+
+type Db interface {
+	ByteReader
+	ByteWriter
 }
 
 type Vault struct {
@@ -37,7 +44,7 @@ func NewVault(db Db) *VaultWithDb {
 	var vault Vault
 	err = json.Unmarshal(file, &vault)
 	if err != nil {
-		color.Red("Не удалось разобрать файл data.json")
+		output.PrintError("Не удалось разобрать файл data.json")
 		return &VaultWithDb{
 			Vault: Vault{
 				Accounts:  []Account{},
@@ -68,10 +75,10 @@ func (vault *VaultWithDb) DeleteAccountByUrl(url string) bool {
 	return isDeleted
 }
 
-func (vault *VaultWithDb) FindAccountByUrl(url string) []Account {
+func (vault *VaultWithDb) FindAccounts(str string, checker func(Account, string)bool) []Account {
 	var accounts []Account
 	for _, account := range vault.Accounts {
-		isMatched := strings.Contains(account.Url, url)
+		isMatched := checker(account, str)
 		if isMatched {
 			accounts = append(accounts, account)
 		}
@@ -96,7 +103,7 @@ func (vault *VaultWithDb) save() {
 	vault.UpdatedAt = time.Now()
 	data, err := vault.Vault.ToBytes()
 	if err != nil {
-		color.Red("Не удалось преобразовать")
+		output.PrintError(err)
 	}
 	vault.db.Write(data)
 }

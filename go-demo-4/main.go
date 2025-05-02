@@ -3,14 +3,18 @@ package main
 import (
 	"demo/password/account"
 	"demo/password/files"
+	"demo/password/output"
 	"fmt"
 
 	"github.com/fatih/color"
 )
 
 func main() {
+	output.PrintError(1)
+	output.PrintError("fo")
 	fmt.Println("__Менеджер паролей__")
 	vault := account.NewVault(files.NewJsonDb("data.json"))
+	//vault := account.NewVault(files.NewCloudDb("https://go.dev"))
 Menu:
 	for {
 		variant := getMenu()
@@ -26,7 +30,6 @@ Menu:
 		}
 	}
 }
-
 
 func getMenu() int {
 	var variant int
@@ -56,7 +59,7 @@ func deleteAccount(vault *account.VaultWithDb) {
 	if isDeleted {
 		color.Green("Удалено")
 	} else {
-		color.Red("Не найдено")
+		output.PrintError("Не найдено")
 	}
 }
 
@@ -66,7 +69,7 @@ func createAccount(vault *account.VaultWithDb) {
 	url := promptData("Введите URL")
 	myAccount, err := account.NewAccount(login, password, url)
 	if err != nil {
-		fmt.Println("Неверный формат URL или Логин")
+		output.PrintError("Неверный формат URL или Логин")
 		return
 	}
 	vault.AddAccount(*myAccount)
@@ -78,5 +81,3 @@ func promptData(prompt string) string {
 	fmt.Scanln(&res)
 	return res
 }
-
-

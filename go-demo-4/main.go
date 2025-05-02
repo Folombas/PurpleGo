@@ -8,10 +8,6 @@ import (
 )
 
 func main() {
-	// 1. Создать аккаунт
-	// 2. Найти аккаунт
-	// 3. Удалить аккаунт
-	// 4. Выход
 	fmt.Println("__Менеджер паролей__")
 	vault := account.NewVault()
 Menu:
@@ -23,12 +19,13 @@ Menu:
 		case 2:
 			findAccount(vault)
 		case 3:
-			deleteAccount()
+			deleteAccount(vault)
 		default:
 			break Menu
 		}
 	}
 }
+
 
 func getMenu() int {
 	var variant int
@@ -52,8 +49,14 @@ func findAccount(vault *account.Vault) {
 	}
 }
 
-func deleteAccount() {
-
+func deleteAccount(vault *account.Vault) {
+	url := promptData("Введите URL для поиска")
+	isDeleted := vault.DeleteAccountByUrl(url)
+	if isDeleted {
+		color.Green("Удалено")
+	} else {
+		color.Red("Не найдено")
+	}
 }
 
 func createAccount(vault *account.Vault) {

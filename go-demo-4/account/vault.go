@@ -107,3 +107,4 @@ func (vault *VaultWithDb) save() {
 	}
 	vault.db.Write(data)
 }
+

@@ -101,7 +101,7 @@ func (vault *Vault) ToBytes() ([]byte, error) {
 
 func (vault *VaultWithDb) save() {
 	vault.UpdatedAt = time.Now()
-	data, err := vault.Vault.ToBytes()
+	data, err := vault.Vault.ToBytes() // data, err := vault.Vault.ToBytes()
 	if err != nil {
 		output.PrintError(err)
 	}

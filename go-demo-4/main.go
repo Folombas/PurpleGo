@@ -35,7 +35,7 @@ func main() {
 		output.PrintError("Неудалось найти env файл")
 	}
 
-	vault := account.NewVault(files.NewJsonDb("data.json"), *encrypter.NewEncrypter())
+	vault := account.NewVault(files.NewJsonDb("data.vault"), *encrypter.NewEncrypter())
 	//vault := account.NewVault(files.NewCloudDb("https://go.dev"))
 Menu:
 	for {
